@@ -14,10 +14,26 @@ function GameLayer:init(heroCount)
     
     self:addControllers()
     
+    local listener = cc.EventListenerTouchOneByOne:create()
+    self._listener = listener
+    listener:setSwallowTouches(true)
+    
+    local function onTouchBegan(touch, event)
+        for key, controller in pairs(self._controllers) do
+            if (cc.rectContainsPoint(controller:getEdge():getBoundingBox(), touch:getLocation())) then
+                controller:onTouch()
+            end
+        end
+
+        return true    
+    end
+
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    
     function update(dt)
         -- update all hero controllers
-        for key, var in pairs(self._controllers) do
-        	var:onUpdate()
+        for key, controller in pairs(self._controllers) do
+        	controller:onUpdate()
         end
     end
     

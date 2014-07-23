@@ -1,27 +1,41 @@
-local HeroController = class("HeroController", cc.Scheduler)
+local HeroController = class("HeroController")
 
 function HeroController.createController(layer, positionY)
     local controller = HeroController.new()
     controller:init(layer, positionY)
-    
 end
 
 function HeroController:ctor()
 	self._layer = nil
 	self._positionY = 0
+	self._edge = nil
+	self._hero = nil
 end
 
 function HeroController:init(layer, positionY)
 	self._layer = layer
 	self._positionY = positionY
 	
-	-- TODO add edge
+	local visibleSize = cc.Director:getInstance():getVisibleSize()
 	
-    -- TODO add ground
+	-- add edge
+	self._edge = require("Edge").new()
+    self._layer:addChild(self._edge)
+    self._edge:setPosition(visibleSize.width / 2, visibleSize.height / 2 + positionY)
 	
-    -- TODO add hero
+    -- add ground
+    local ground = cc.Sprite:create()
+    ground:setTextureRect(cc.rect(0, 0, visibleSize.width, 3))
+    ground:setColor(cc.c3b(0, 0, 0))
+    self._layer:addChild(ground)
+    ground:setPosition(visibleSize.width / 2, positionY - 3 / 2)
 	
-	resetTimer()
+    -- add hero
+	self._hero = require("Hero").new()
+	self._layer:addChild(self._hero)
+    self._hero:setPosition(50, positionY + self._hero:getContentSize().height / 2)
+	
+	self:resetTimer()
 end
 
 function HeroController:resetTimer()
@@ -34,6 +48,14 @@ function HeroController:onUpdate()
 --            local block = require("Block").new()
 --            self._layer:addChild(block)
 --            block:setPositionY(self._positionY + block:getContentSize().height / 2)
+end
+
+function HeroController:getEdge()
+	return self._edge
+end
+
+function HeroController:onTouch()
+	
 end
 
 return HeroController
