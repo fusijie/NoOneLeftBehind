@@ -16,7 +16,7 @@ end
 
 function GameOver.createScene(currentHeroCount,score)
 	local scene = cc.Scene:create()
-	local layer = GameOver.create(currentHeroCount)
+	local layer = GameOver.create(currentHeroCount, score)
     scene:addChild(layer)
     return scene
 end
@@ -26,6 +26,13 @@ function GameOver:initWithCurrentHeroCountAndScore(currentHeroCount,score)
     self._score = score
     
     local visibleSize = cc.Director:getInstance():getVisibleSize()
+    
+    local scoreLabel = cc.Label:create()
+    scoreLabel:setColor(cc.c3b(0, 0, 0))
+    scoreLabel:setSystemFontSize(24)
+    scoreLabel:setString(string.sub(score,1,4))
+    self:addChild(scoreLabel)
+    scoreLabel:setPosition(visibleSize.width / 2, visibleSize.height - 20)
     
     local logo = cc.Sprite:create("logo.png")
     self:addChild(logo)

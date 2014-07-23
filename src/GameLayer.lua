@@ -17,6 +17,16 @@ function GameLayer:init(heroCount)
     self.touchListener = cc.EventListenerTouchOneByOne:create()
     self.touchListener:setSwallowTouches(true)
     
+    local visibleSize = cc.Director:getInstance():getVisibleSize()
+    local score = 0
+    
+    local scoreLabel = cc.Label:create()
+    scoreLabel:setColor(cc.c3b(0, 0, 0))
+    scoreLabel:setSystemFontSize(24)
+    scoreLabel:setString(score)
+    self:addChild(scoreLabel)
+    scoreLabel:setPosition(visibleSize.width / 2, visibleSize.height - 20)
+    
     local function onTouchBegan(touch, event)
         for key, controller in pairs(self._controllers) do
             if (cc.rectContainsPoint(controller:getEdge():getBoundingBox(), touch:getLocation())) then
@@ -24,7 +34,7 @@ function GameLayer:init(heroCount)
             end
         end
 
-        return true    
+        return true
     end
 
     self.touchListener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
@@ -36,7 +46,7 @@ function GameLayer:init(heroCount)
         cc.Director:getInstance():getEventDispatcher():removeEventListener(self.touchListener)
         cc.Director:getInstance():getEventDispatcher():removeEventListener(self.contactListener)
         
-        cc.Director:getInstance():replaceScene(require("GameOver").create(self._heroCount, 20))
+        cc.Director:getInstance():replaceScene(require("GameOver").create(self._heroCount, score))
     end
     
     self.contactListener = cc.EventListenerPhysicsContact:create();
@@ -45,6 +55,10 @@ function GameLayer:init(heroCount)
     eventDispatcher:addEventListenerWithSceneGraphPriority(self.contactListener, self);
     
     function update(dt)
+        score = score + dt
+        
+        scoreLabel:setString(string.sub(score, 1, 4))
+        
         -- update all hero controllers
         for key, controller in pairs(self._controllers) do
         	controller:onUpdate()
