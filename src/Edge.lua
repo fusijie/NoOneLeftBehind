@@ -2,9 +2,11 @@ local Edge = class("Edge", function()
     return cc.Node:create()
 end)
 
-function Edge:init()
-    getmetatable(self):init()
+function Edge:ctor()
+    self:init()
+end
 
+function Edge:init()
     local width = cc.Director:getInstance():getVisibleSize().width
     local height = cc.Director:getInstance():getVisibleSize().height
     
