@@ -15,13 +15,6 @@ function MenuLayer:init()
     self:addBtns()
     self:addBtnListeners()
     
-    -- add logo
-    local logo = cc.Sprite:create("logo.png")
-    self:addChild(logo)
-    
-    logo:setPosition(visibleSize.width / 2, 20)
-    logo:setAnchorPoint(0.5, 0)
-    
     -- add title
     local titleLabel = cc.Label:create()
     self:addChild(titleLabel)
