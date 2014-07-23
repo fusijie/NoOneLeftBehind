@@ -14,9 +14,18 @@ function GameLayer:init(heroCount)
     
     self:addControllers()
     
-    local listener = cc.EventListenerTouchOneByOne:create()
-    self._listener = listener
-    listener:setSwallowTouches(true)
+    self.touchListener = cc.EventListenerTouchOneByOne:create()
+    self.touchListener:setSwallowTouches(true)
+    
+    local visibleSize = cc.Director:getInstance():getVisibleSize()
+    local score = 0
+    
+    local scoreLabel = cc.Label:create()
+    scoreLabel:setColor(cc.c3b(0, 0, 0))
+    scoreLabel:setSystemFontSize(24)
+    scoreLabel:setString(score)
+    self:addChild(scoreLabel)
+    scoreLabel:setPosition(visibleSize.width / 2, visibleSize.height - 20)
     
     local function onTouchBegan(touch, event)
         for key, controller in pairs(self._controllers) do
@@ -27,13 +36,31 @@ function GameLayer:init(heroCount)
             end
         end
 
-        return true    
+        return true
     end
 
-    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, self)
+    self.touchListener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(self.touchListener, self)
+    
+    local function onContactBegin(contact)
+        self:unscheduleUpdate()
+        
+        cc.Director:getInstance():getEventDispatcher():removeEventListener(self.touchListener)
+        cc.Director:getInstance():getEventDispatcher():removeEventListener(self.contactListener)
+        
+        cc.Director:getInstance():replaceScene(require("GameOver").create(self._heroCount, score))
+    end
+    
+    self.contactListener = cc.EventListenerPhysicsContact:create();
+    self.contactListener:registerScriptHandler(onContactBegin, cc.Handler.EVENT_PHYSICS_CONTACT_BEGIN);
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(self.contactListener, self);
     
     function update(dt)
+        score = score + dt
+        
+        scoreLabel:setString(string.sub(score, 1, 4))
+        
         -- update all hero controllers
         for key, controller in pairs(self._controllers) do
         	controller:onUpdate()
