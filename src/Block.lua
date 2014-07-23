@@ -3,15 +3,14 @@ local Block = class("Block", function()
 end)
 
 function Block:init()
-	getmetatable(self):init()
-	
+
 	local width = math.random(0, 24) + 5
     local height = math.random(0, 29) + 10
 	
 	self:setPositionX(cc.Director:getInstance():getVisibleSize().width)
 	
     self:setContentSize(width,height)
-    self:setTextureRect({0, 0, width, height})
+    self:setTextureRect(cc.rect(0, 0, width, height))
 	self:setColor(cc.c3b(0, 0, 0))
 	
     self:setPhysicsBody(cc.PhysicsBody:createBox(cc.size(width, height)))
