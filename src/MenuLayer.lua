@@ -15,9 +15,26 @@ function MenuLayer:init()
     
     -- add split
     local split = cc.Sprite:create("split.png")
-    -- self.setScale(logo,1.5)
     self:addChild(split)
     split:setPosition(175, visibleSize.height - logo:getContentSize().height / 2 - 90)
+    
+    -- add hero and runAction
+    local cache = cc.SpriteFrameCache:getInstance()
+    cache:addSpriteFrames("hero.plist")
+    
+    local hero = cc.Sprite:createWithSpriteFrameName("hero_00.png")
+    self:addChild(hero)
+    hero:setPosition(295, visibleSize.height - logo:getContentSize().height / 2 - 70)
+
+    local animFrames = {}
+    for i = 0, 4 do 
+        local frame = cache:getSpriteFrame(string.format("hero_%02d.png", i) )
+        animFrames[i] = frame
+    end
+
+    local animation = cc.Animation:createWithSpriteFrames(animFrames, 0.1)
+    local animate = cc.Animate:create(animation);
+    hero:runAction(cc.RepeatForever:create(animate))
     
     -- add title
     local title = cc.Sprite:create("title.png")

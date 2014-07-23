@@ -16,7 +16,7 @@ function Hero:init()
     
     -- runAction
     local cache = cc.SpriteFrameCache:getInstance()
-    cache:addSpriteFrames("hero.plist")
+    -- cache:addSpriteFrames("hero.plist")
     
     local animFrames = {}
     for i = 0, 4 do 
