@@ -1,7 +1,7 @@
 {
   "init_cfg": {
     "isLandscape": false,
-    "name": "NoOneDies",
+    "name": "NoOneLeftBehind",
     "width": 800,
     "height": 480,
     "entry": "src/main.lua",

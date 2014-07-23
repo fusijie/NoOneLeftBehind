@@ -41,7 +41,7 @@ function MenuLayer:init()
     self.setScale(title,0.7)
     self:addChild(title)
     
-    title:setPosition(visibleSize.width / 2 + 60, visibleSize.height - title:getContentSize().height / 2 - 120)
+    title:setPosition(visibleSize.width / 2 + 290, visibleSize.height - title:getContentSize().height / 2 - 120)
     
     return true
 end
