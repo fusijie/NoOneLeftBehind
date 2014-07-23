@@ -20,8 +20,10 @@ function GameLayer:init(heroCount)
     
     local function onTouchBegan(touch, event)
         for key, controller in pairs(self._controllers) do
-            if (cc.rectContainsPoint(controller:getEdge():getBoundingBox(), touch:getLocation())) then
+            xx = controller:getEdge():getBoundingBox()
+            if (cc.rectContainsPoint(xx, touch:getLocation())) then
                 controller:onTouch()
+                break
             end
         end
 
@@ -50,7 +52,7 @@ function GameLayer:addControllers()
     for i=1, self._heroCount do
         local heroController = require("HeroController")
         local controller = heroController.createController(self, startY + gap * (i - 1))
-        self._controllers[i]= controller
+        table.insert(self._controllers,0,controller)
     end
 end
 
