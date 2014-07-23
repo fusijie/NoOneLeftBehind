@@ -1,7 +1,7 @@
 require("Cocos2d")
 
 local GameLayer = class("GameLayer", function()
-    return cc.LayerColor:create()
+    return cc.LayerColor:create(cc.c4b(255,255,255,255))
 end)
 
 function GameLayer:ctor()
@@ -47,7 +47,7 @@ function GameLayer:addControllers()
     local gap = (visibleSize.height - startY) / self._heroCount
     
     for i=1, self._heroCount do
-        local controller = require("HeroController").createController(self, startY + gap * i)
+        local controller = require("HeroController").createController(self, startY + gap * (i - 1))
         table.insert(self._controllers, i, controller)
     end
 end
