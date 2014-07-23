@@ -48,8 +48,9 @@ function GameLayer:addControllers()
     local gap = (visibleSize.height - startY) / self._heroCount
     
     for i=1, self._heroCount do
-        local controller = require("HeroController").createController(self, startY + gap * (i - 1))
-        table.insert(self._controllers, i, controller)
+        local heroController = require("HeroController")
+        local controller = heroController.createController(self, startY + gap * (i - 1))
+        self._controllers[i]= controller
     end
 end
 

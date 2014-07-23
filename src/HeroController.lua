@@ -3,6 +3,7 @@ local HeroController = class("HeroController")
 function HeroController.createController(layer, positionY)
     local controller = HeroController.new()
     controller:init(layer, positionY)
+    return controller
 end
 
 function HeroController:ctor()
@@ -40,14 +41,19 @@ end
 
 function HeroController:resetTimer()
 	self.frameIndex = 0
-	nextKeyFrameIndex = math.random(0, 99) + 120
+	self.nextKeyFrameIndex = math.random(0, 99) + 120
 end
 
 function HeroController:onUpdate()
--- TODO add block
---            local block = require("Block").new()
---            self._layer:addChild(block)
---            block:setPositionY(self._positionY + block:getContentSize().height / 2)
+    self.frameIndex = self.frameIndex +1
+    if self.frameIndex >= self.nextKeyFrameIndex   then
+        local block = require("Block").new()
+        block:init()
+        self._layer:addChild(block)
+        block:setPositionY(self._positionY + block:getContentSize().height / 2)
+        self:resetTimer()
+    end
+
 end
 
 function HeroController:getEdge()
@@ -55,7 +61,9 @@ function HeroController:getEdge()
 end
 
 function HeroController:onTouch()
-	
+    if self._hero:getPositionY()<self._positionY+self._hero:getContentSize().height/2+5 then
+		self._hero:getPhysicsBody():setVelocity(cc.p(0, 400))
+	end
 end
 
 return HeroController
