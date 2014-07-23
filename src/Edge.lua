@@ -12,7 +12,7 @@ function Edge:init()
     
     self:setContentSize(width,height)
     
-    self:setPhysicsBody(cc.PhysicsBody:createBox(cc.size(width, height)))
+    self:setPhysicsBody(cc.PhysicsBody:createEdgeBox(cc.size(width, height)))
 end
 
 return Edge
