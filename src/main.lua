@@ -1,4 +1,3 @@
-
 require "Cocos2d"
 
 -- cclog
@@ -29,6 +28,7 @@ local function main()
     local scene = require("MenuScene")
     local menuScene = scene.createScene()
     
+    cc.Director:getInstance():setDisplayStats(false)
     if cc.Director:getInstance():getRunningScene() then
         cc.Director:getInstance():replaceScene(menuScene)
     else

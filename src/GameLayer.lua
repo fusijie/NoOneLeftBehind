@@ -20,12 +20,11 @@ function GameLayer:init(heroCount)
     local visibleSize = cc.Director:getInstance():getVisibleSize()
     local score = 0
     
-    local scoreLabel = cc.Label:create()
+    local scoreLabel = cc.Label:createWithTTF("","fonts/Marker Felt.ttf", 32)
     scoreLabel:setColor(cc.c3b(0, 0, 0))
-    scoreLabel:setSystemFontSize(24)
     scoreLabel:setString(score)
     self:addChild(scoreLabel)
-    scoreLabel:setPosition(visibleSize.width / 2, visibleSize.height - 20)
+    scoreLabel:setPosition(visibleSize.width / 2, visibleSize.height - 30)
     
     local function onTouchBegan(touch, event)
         for key, controller in pairs(self._controllers) do
@@ -58,7 +57,6 @@ function GameLayer:init(heroCount)
     
     function update(dt)
         score = score + dt
-        
         scoreLabel:setString(string.sub(score, 1, 4))
         
         -- update all hero controllers
