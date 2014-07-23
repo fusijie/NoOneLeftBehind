@@ -29,6 +29,7 @@ function GameLayer:init(heroCount)
     end
 
     listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, self)
     
     function update(dt)
         -- update all hero controllers

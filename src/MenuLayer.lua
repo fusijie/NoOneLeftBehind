@@ -41,7 +41,7 @@ function MenuLayer:addBtns()
     normal:registerScriptTapHandler(menuCallbackOpenNormal)
     
     local function menuCallbackOpenNightmare()
-    	
+        cc.Director:getInstance():replaceScene(require("GameScene").createScene(3))
     end
     
     local nightmare = cc.MenuItemImage:create("nightmare.png", "nightmare.png")
@@ -49,7 +49,7 @@ function MenuLayer:addBtns()
     nightmare:registerScriptTapHandler(menuCallbackOpenNightmare)
     
     local function menuCallbackOpenHell()
-
+        cc.Director:getInstance():replaceScene(require("GameScene").createScene(4))
     end
     
     local hell = cc.MenuItemImage:create("hell.png", "hell.png")
@@ -57,7 +57,7 @@ function MenuLayer:addBtns()
     hell:registerScriptTapHandler(menuCallbackOpenHell)
     
     local function menuCallbackOpenInferno()
-
+        cc.Director:getInstance():replaceScene(require("GameScene").createScene(5))
     end
     
     local inferno = cc.MenuItemImage:create("inferno.png", "inferno.png")
