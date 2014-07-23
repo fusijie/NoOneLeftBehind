@@ -9,14 +9,22 @@ function MenuLayer:init()
     
     -- add logo
     local logo = cc.Sprite:create("logo.png")
+    self.setScale(logo,1.5)
     self:addChild(logo)
-    logo:setPosition(50, visibleSize.height - logo:getContentSize().height / 2 - 20)
+    logo:setPosition(110, visibleSize.height - logo:getContentSize().height / 2 - 90)
+    
+    -- add split
+    local split = cc.Sprite:create("split.png")
+    -- self.setScale(logo,1.5)
+    self:addChild(split)
+    split:setPosition(175, visibleSize.height - logo:getContentSize().height / 2 - 90)
     
     -- add title
     local title = cc.Sprite:create("title.png")
+    self.setScale(title,0.7)
     self:addChild(title)
     
-    title:setPosition(visibleSize.width / 2, visibleSize.height - title:getContentSize().height / 2 - 20)
+    title:setPosition(visibleSize.width / 2 + 60, visibleSize.height - title:getContentSize().height / 2 - 120)
     
     return true
 end
@@ -29,7 +37,7 @@ function MenuLayer:addBtns()
     end
     
     local normal = cc.MenuItemImage:create("normal.png", "normal.png")
-    normal:setPosition(0, 150)
+    normal:setPosition(0, 120)
     normal:registerScriptTapHandler(menuCallbackOpenNormal)
     
     local function menuCallbackOpenNightmare()
@@ -37,7 +45,7 @@ function MenuLayer:addBtns()
     end
     
     local nightmare = cc.MenuItemImage:create("nightmare.png", "nightmare.png")
-    nightmare:setPosition(0, 0)
+    nightmare:setPosition(0, -20)
     nightmare:registerScriptTapHandler(menuCallbackOpenNightmare)
     
     local function menuCallbackOpenHell()
@@ -45,7 +53,7 @@ function MenuLayer:addBtns()
     end
     
     local hell = cc.MenuItemImage:create("hell.png", "hell.png")
-    hell:setPosition(0, - 150)
+    hell:setPosition(0, - 160)
     hell:registerScriptTapHandler(menuCallbackOpenHell)
     
     local function menuCallbackOpenInferno()
