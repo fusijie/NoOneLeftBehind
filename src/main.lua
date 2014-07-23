@@ -23,17 +23,16 @@ local function main()
     
     cc.FileUtils:getInstance():addSearchPath("src")
     cc.FileUtils:getInstance():addSearchPath("res")
-    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
+    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 800, 0)
     
     --create scene 
-    local scene = require("GameScene")
-    local gameScene = scene.create()
-    gameScene:playBgMusic()
+    local scene = require("MenuScene")
+    local menuScene = scene.createScene()
     
     if cc.Director:getInstance():getRunningScene() then
-        cc.Director:getInstance():replaceScene(gameScene)
+        cc.Director:getInstance():replaceScene(menuScene)
     else
-        cc.Director:getInstance():runWithScene(gameScene)
+        cc.Director:getInstance():runWithScene(menuScene)
     end
 
 end
