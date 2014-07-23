@@ -14,9 +14,8 @@ function GameLayer:init(heroCount)
     
     self:addControllers()
     
-    local listener = cc.EventListenerTouchOneByOne:create()
-    self._listener = listener
-    listener:setSwallowTouches(true)
+    self.touchListener = cc.EventListenerTouchOneByOne:create()
+    self.touchListener:setSwallowTouches(true)
     
     local function onTouchBegan(touch, event)
         for key, controller in pairs(self._controllers) do
@@ -28,8 +27,22 @@ function GameLayer:init(heroCount)
         return true    
     end
 
-    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, self)
+    self.touchListener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(self.touchListener, self)
+    
+    local function onContactBegin(contact)
+        self:unscheduleUpdate()
+        
+        cc.Director:getInstance():getEventDispatcher():removeEventListener(self.touchListener)
+        cc.Director:getInstance():getEventDispatcher():removeEventListener(self.contactListener)
+        
+        cc.Director:getInstance():replaceScene(require("GameOver").create(self._heroCount, 20))
+    end
+    
+    self.contactListener = cc.EventListenerPhysicsContact:create();
+    self.contactListener:registerScriptHandler(onContactBegin, cc.Handler.EVENT_PHYSICS_CONTACT_BEGIN);
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(self.contactListener, self);
     
     function update(dt)
         -- update all hero controllers
