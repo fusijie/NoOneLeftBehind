@@ -1,5 +1,5 @@
 {
-  "has_native": true,
+  "has_native": false,
   "project_type": "lua",
   "assets": {
     "ignores": []
